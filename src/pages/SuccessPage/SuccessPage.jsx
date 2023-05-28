@@ -32,7 +32,7 @@ export default function SuccessPage({session, userName, setUserName, userCPF,set
 
             </TextContainer>
 
-            <TextContainer >
+            <TextContainer data-test="client-info" >
                 <strong><p>Comprador</p></strong>
                 <p>Nome: {userName}</p>
                 <p>CPF: {userCPF}</p>
