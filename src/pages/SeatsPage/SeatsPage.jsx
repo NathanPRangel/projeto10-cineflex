@@ -9,105 +9,105 @@ import { useParams, useNavigate } from "react-router-dom"
 import Seat from "./Seat"
 
 export default function SeatsPage({session, setSession, seats, setSeats, userCPF, setUserCPF, userName, setUserName ,
-    seatID, setSeatID, seatName, setSeatName}) {
-    
-        const { idSessao } = useParams();
-        // const [session, setSession] = useState([]);
-        // const [seats, setSeats] = useState([]);
-    
-        // const [userCPF, setUserCPF]= useState("");
-        // const [userName, setUserName]= useState("");
-    
-        // const [seatID, setSeatID]= useState("")
-    
-        const navigate= useNavigate();
-    
-        useEffect(() => {
-            const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`;
-            const promise = axios.get(url);
-    
-            promise.then((answer) => {
-                setSession(answer.data);
-                setSeats(answer.data.seats);
-            }
-            )
-            promise.catch((err) =>
-                console.log(err))
-        }, [])
-    
-        if (session.length === 0) {
-            return <p>Carregando...</p>
+seatID, setSeatID, seatName, setSeatName}) {
+
+    const { idSessao } = useParams();
+    // const [session, setSession] = useState([]);
+    // const [seats, setSeats] = useState([]);
+
+    // const [userCPF, setUserCPF]= useState("");
+    // const [userName, setUserName]= useState("");
+
+    // const [seatID, setSeatID]= useState("")
+
+    const navigate= useNavigate();
+
+    useEffect(() => {
+        const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`;
+        const promise = axios.get(url);
+
+        promise.then((answer) => {
+            setSession(answer.data);
+            setSeats(answer.data.seats);
         }
-        console.log(session);
-        console.log(seatID)
-        console.log(seatName)
-    
-        function submitSeat(event){
-    
-            event.preventDefault();
-    
-            const request= axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many",{
-                ids: seatID,
-                name: userName,
-                cpf: userCPF,
-            })
-            request.then(() => navigate("/sucesso")) 
-    
-        }
-    
-        return (
-            <PageContainer>
-                Selecione o(s) assento(s)
-    
-                <SeatsContainer>
-                    {seats.map((se) =><Seat se={se} key={se.id}
-                      seatID={seatID} setSeatID={setSeatID} seatName={seatName}
-                      setSeatName={setSeatName} />  )}
-    
-                </SeatsContainer>
-    
-                <CaptionContainer>
-                    <CaptionItem>
-                        <CaptionCircle bColor={"#1AAE9E"} borderColor={"#0E7D71"}/>
-                        Selecionado
-                    </CaptionItem>
-                    <CaptionItem>
-                        <CaptionCircle bColor={"#C3CFD9"} borderColor={"#7B8B99"}/>
-                        Disponível
-                    </CaptionItem>
-                    <CaptionItem>
-                        <CaptionCircle bColor={"#FBE192"} borderColor={"#F7C52B"} />
-                        Indisponível
-                    </CaptionItem>
-                </CaptionContainer>
-    
-                <FormContainer onSubmit={submitSeat}>
-                    Nome do Comprador:
-                    <input type="text" value={userName} onChange={e=> setUserName(e.target.value)}
-                     placeholder="Digite seu nome..." required data-test="client-name"/>
-    
-                    CPF do Comprador:
-                    <input type="text" value={userCPF} onChange={e=> setUserCPF(e.target.value)}
-                    placeholder="Digite seu CPF..." required  data-test="client-cpf"/>
-    
-                    <button type="submit"  data-test="book-seat-btn">Reservar Assento(s)</button>
-                </FormContainer>
-    
-                <FooterContainer data-test="footer">
-                    <div>
-                        <img src={session.movie.posterURL} alt="poster" />
-                    </div>
-                    <div>
-                        <p>{session.movie.title}</p>
-                        <p>{session.day.weekday} - {session.name}</p>
-                    </div>
-                </FooterContainer>
-    
-            </PageContainer>
         )
+        promise.catch((err) =>
+            console.log(err))
+    }, [])
+
+    if (session.length === 0) {
+        return <p>Carregando...</p>
+    }
+    console.log(session);
+    console.log(seatID)
+    console.log(seatName)
+
+    function submitSeat(event){
+
+        event.preventDefault();
+
+        const request= axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many",{
+            ids: seatID,
+            name: userName,
+            cpf: userCPF,
+        })
+        request.then(() => navigate("/sucesso")) 
+
     }
 
-    const PageContainer = styled.div`
+    return (
+        <PageContainer>
+            Selecione o(s) assento(s)
+
+            <SeatsContainer>
+                {seats.map((se) =><Seat se={se} key={se.id}
+                  seatID={seatID} setSeatID={setSeatID} seatName={seatName}
+                  setSeatName={setSeatName} />  )}
+
+            </SeatsContainer>
+
+            <CaptionContainer>
+                <CaptionItem>
+                    <CaptionCircle bColor={"#1AAE9E"} borderColor={"#0E7D71"}/>
+                    Selecionado
+                </CaptionItem>
+                <CaptionItem>
+                    <CaptionCircle bColor={"#C3CFD9"} borderColor={"#7B8B99"}/>
+                    Disponível
+                </CaptionItem>
+                <CaptionItem>
+                    <CaptionCircle bColor={"#FBE192"} borderColor={"#F7C52B"} />
+                    Indisponível
+                </CaptionItem>
+            </CaptionContainer>
+
+            <FormContainer onSubmit={submitSeat}>
+                Nome do Comprador:
+                <input type="text" value={userName} onChange={e=> setUserName(e.target.value)}
+                 placeholder="Digite seu nome..." required data-test="client-name"/>
+
+                CPF do Comprador:
+                <input type="text" value={userCPF} onChange={e=> setUserCPF(e.target.value)}
+                placeholder="Digite seu CPF..." required  data-test="client-cpf"/>
+
+                <button type="submit"  data-test="book-seat-btn">Reservar Assento(s)</button>
+            </FormContainer>
+
+            <FooterContainer data-test="footer">
+                <div>
+                    <img src={session.movie.posterURL} alt="poster" />
+                </div>
+                <div>
+                    <p>{session.movie.title}</p>
+                    <p>{session.day.weekday} - {session.name}</p>
+                </div>
+            </FooterContainer>
+
+        </PageContainer>
+    )
+}
+
+const PageContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;

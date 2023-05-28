@@ -1,34 +1,48 @@
 import styled from "styled-components"
+import { useNavigate } from "react-router-dom"
 
-export default function SuccessPage() {
+export default function SuccessPage({session, userName, setUserName, userCPF,setUserCPF, seatName, setSeatName}) {
+
+    const navigate = useNavigate();
+
+    if (session.length === 0) {
+        return <p>Carregando...</p>
+    }
+
+    function goHome(){
+        setUserName("");
+        setUserCPF("");
+        setSeatName("");
+        navigate("/")
+    }
 
     return (
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>
 
-            <TextContainer>
+            <TextContainer >
                 <strong><p>Filme e sessão</p></strong>
-                <p>Tudo em todo lugar ao mesmo tempo</p>
-                <p>03/03/2023 - 14:00</p>
+                <p>{session.movie.title}</p>
+                <p>{session.day.date} - {session.name}</p>
             </TextContainer>
 
-            <TextContainer>
+            <TextContainer >
                 <strong><p>Ingressos</p></strong>
-                <p>Assento 01</p>
-                <p>Assento 02</p>
-                <p>Assento 03</p>
+                {seatName.map((num)=><p key={num}>Assento {num}</p>)}
+
             </TextContainer>
 
-            <TextContainer>
+            <TextContainer >
                 <strong><p>Comprador</p></strong>
-                <p>Nome: Letícia Chijo</p>
-                <p>CPF: 123.456.789-10</p>
+                <p>Nome: {userName}</p>
+                <p>CPF: {userCPF}</p>
             </TextContainer>
 
-            <button>Voltar para Home</button>
+            <button onClick={goHome} >Voltar para Home</button>
         </PageContainer>
     )
 }
+
 
 const PageContainer = styled.div`
     display: flex;
