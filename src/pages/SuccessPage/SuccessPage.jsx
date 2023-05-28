@@ -20,13 +20,13 @@ export default function SuccessPage({session, userName, setUserName, userCPF,set
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>
 
-            <TextContainer >
+            <TextContainer data-test="movie-info">
                 <strong><p>Filme e sessão</p></strong>
                 <p>{session.movie.title}</p>
                 <p>{session.day.date} - {session.name}</p>
             </TextContainer>
 
-            <TextContainer >
+            <TextContainer data-test="seats-info">
                 <strong><p>Ingressos</p></strong>
                 {seatName.map((num)=><p key={num}>Assento {num}</p>)}
 
@@ -38,7 +38,7 @@ export default function SuccessPage({session, userName, setUserName, userCPF,set
                 <p>CPF: {userCPF}</p>
             </TextContainer>
 
-            <button onClick={goHome} >Voltar para Home</button>
+            <button onClick={goHome} data-test="go-home-btn">Voltar para Home</button>
         </PageContainer>
     )
 }
