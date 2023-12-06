@@ -4,7 +4,6 @@ Single-Page Application made to a movie theater, using ```React Router``` for th
 
 ## Table of contents
 
-- [Overview](#overview)
 - [About](#about)
 - [Built with](#built-with)
 - [How to run](#how-to-run)
